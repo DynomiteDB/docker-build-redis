@@ -1,0 +1,36 @@
+# DynomiteDB Redis backend
+# Ignore excessive lintian warnings
+
+dynomitedb-redis: no-copyright-file
+dynomitedb-redis: executable-not-elf-or-script usr/share/lintian/overrides/dynomitedb-redis
+dynomitedb-redis: wrong-name-for-changelog-of-native-package usr/share/doc/dynomitedb-redis/changelog.Debian.gz
+dynomitedb-redis: no-copyright-file
+dynomitedb-redis: dir-in-usr-local usr/local/bin/
+dynomitedb-redis: file-in-usr-local usr/local/bin/redis-benchmark
+dynomitedb-redis: file-in-unusual-dir usr/local/bin/redis-benchmark
+dynomitedb-redis: file-in-usr-local usr/local/bin/redis-check-aof
+dynomitedb-redis: file-in-unusual-dir usr/local/bin/redis-check-aof
+dynomitedb-redis: file-in-usr-local usr/local/bin/redis-check-dump
+dynomitedb-redis: file-in-unusual-dir usr/local/bin/redis-check-dump
+dynomitedb-redis: file-in-usr-local usr/local/bin/redis-cli
+dynomitedb-redis: file-in-unusual-dir usr/local/bin/redis-cli
+dynomitedb-redis: dir-in-usr-local usr/local/dynomitedb/
+dynomitedb-redis: dir-in-usr-local usr/local/dynomitedb/redis/
+dynomitedb-redis: file-in-usr-local usr/local/dynomitedb/redis/00-RELEASENOTES
+dynomitedb-redis: file-in-unusual-dir usr/local/dynomitedb/redis/00-RELEASENOTES
+dynomitedb-redis: file-in-usr-local usr/local/dynomitedb/redis/BUGS
+dynomitedb-redis: file-in-unusual-dir usr/local/dynomitedb/redis/BUGS
+dynomitedb-redis: file-in-usr-local usr/local/dynomitedb/redis/COPYING
+dynomitedb-redis: file-in-unusual-dir usr/local/dynomitedb/redis/COPYING
+dynomitedb-redis: extra-license-file usr/local/dynomitedb/redis/COPYING
+dynomitedb-redis: file-in-usr-local usr/local/dynomitedb/redis/README
+dynomitedb-redis: file-in-unusual-dir usr/local/dynomitedb/redis/README
+dynomitedb-redis: dir-in-usr-local usr/local/sbin/
+dynomitedb-redis: file-in-usr-local usr/local/sbin/dynomitedb-redis-server
+dynomitedb-redis: file-in-unusual-dir usr/local/sbin/dynomitedb-redis-server
+dynomitedb-redis: non-standard-dir-perm usr/share/ 0775 != 0755
+dynomitedb-redis: non-standard-dir-perm usr/share/doc/ 0775 != 0755
+dynomitedb-redis: non-standard-dir-perm usr/share/doc/dynomitedb-redis/ 0775 != 0755
+dynomitedb-redis: non-standard-dir-in-var var/dynomitedb/
+dynomitedb-redis: file-in-unusual-dir var/dynomitedb/redis/data/README.md
+dynomitedb-redis: file-missing-in-md5sums usr/share/doc/dynomitedb-redis/changelog.Debian.gz
