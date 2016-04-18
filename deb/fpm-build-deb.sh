@@ -1,138 +1,146 @@
 #!/bin/bash
 
 #
-# Build: DynomiteDB Redis backend 
+# Build: DynomiteDB - Redis backend 
 # OS:    Ubuntu 14.04
 # Type:  .deb
 #
-# 1. Compile binaries using Docker
-# 2. Create .deb package using fpm
+
+PACKAGE_NAME="redis"
+VERSION=$REDIS_VERSION
+BIN_BINARIES="redis-benchmark redis-check-aof redis-check-dump redis-cli"
+SBIN_BINARIES="dynomitedb-redis-server"
+STATIC_FILES="00-RELEASENOTES BUGS COPYING README"
+
+#
+# ****************************
+# ** DO NOT EDIT BELOW HERE **
+# ****************************
 #
 
-PWD=`pwd`
-echo $PWD
+DEB=/deb
+SRC=/src
+REPO=/build/redis
+BUILD=${SRC}/dynomitedb-${PACKAGE_NAME}
+PACKAGE_ROOT=${DEB}/tmp/dynomitedb
+#ETC=${PACKAGE_ROOT}/etc
+DEFAULT=${PACKAGE_ROOT}/etc/default
+INITD=${PACKAGE_ROOT}/etc/init.d
+CONF=${PACKAGE_ROOT}/etc/dynomitedb
+LOGROTATED=${PACKAGE_ROOT}/etc/logrotate.d
+BIN=${PACKAGE_ROOT}/usr/local/bin/
+SBIN=${PACKAGE_ROOT}/usr/local/sbin/
+MAN1=${PACKAGE_ROOT}/usr/local/share/man/man1
+MAN8=${PACKAGE_ROOT}/usr/local/share/man/man8
+LINTIAN=${PACKAGE_ROOT}/usr/share/lintian/overrides
+STATIC=${PACKAGE_ROOT}/usr/local/dynomitedb/${PACKAGE_NAME}
+DATA=${PACKAGE_ROOT}/var/dynomitedb/${PACKAGE_NAME}/data
+LOGS=${PACKAGE_ROOT}/var/log/dynomitedb/${PACKAGE_NAME}
+PIDDIR=${PACKAGE_ROOT}/var/run
 
-#
-# Remove prior build
-#
-
-rm -rf /tmp/dynomite/
+DDB="dynomitedb"
 
 #
 # Create a packaging directory structure for the package
 #
-mkdir -p /tmp/dynomite
+mkdir -p $PACKAGE_ROOT
 # Defaults
-mkdir -p /tmp/dynomite/etc/default
+mkdir -p $DEFAULT
 # init scripts
-mkdir -p /tmp/dynomite/etc/init.d
+mkdir -p $INITD
 # Configuration files
-mkdir -p /tmp/dynomite/etc/dynomitedb
+mkdir -p $CONF
 # Log configuration
-mkdir -p /tmp/dynomite/etc/logrotate.d
+mkdir -p $LOGROTATED
 # Binaries
-mkdir -p /tmp/dynomite/usr/local/bin
-mkdir -p /tmp/dynomite/usr/local/sbin
+mkdir -p $BIN
+mkdir -p $SBIN
 # Man pages
-#mkdir -p /tmp/dynomite/usr/local/share/man/man1
-#mkdir -p /tmp/dynomite/usr/local/share/man/man8
+#mkdir -p $MAN1
+#mkdir -p $MAN8
 # Static files
-mkdir -p /tmp/dynomite/usr/local/dynomitedb/redis
+mkdir -p $STATIC
 # Data dirs
-mkdir -p /tmp/dynomite/var/dynomitedb/redis/data
+mkdir -p $DATA
 # Logs
-mkdir -p /tmp/dynomite/var/log/dynomitedb/redis
+mkdir -p $LOGS
 # PID files
-mkdir -p /tmp/dynomite/var/run
+mkdir -p $PIDDIR
 # lintian
-mkdir -p /tmp/dynomite/usr/share/lintian/overrides
-cp ${PWD}/dynomitedb-redis.lintian-overrides /tmp/dynomite/usr/share/lintian/overrides/dynomitedb-redis
-chmod 0644 /tmp/dynomite/usr/share/lintian/overrides/dynomitedb-redis
+mkdir -p $LINTIAN
 
 # Set directory permissions for the package
-chmod -R 0755 /tmp/dynomite/
+chmod -R 0755 $PACKAGE_ROOT
 
-
-#
-# Copy the package files into the packaging directory structure
-#
-
-# Man pages
-#chmod 0644 /tmp/dynomite/usr/local/share/man/man8/*
+# lintian
+cp ${DEB}/${DDB}-${PACKAGE_NAME}.lintian-overrides ${LINTIAN}/${DDB}-${PACKAGE_NAME}
+chmod 0644 ${LINTIAN}/${DDB}-${PACKAGE_NAME}
 
 #
 # Redis
 #
+
 # System binaries
-cp ~/repos/redis/package-server/redis-server /tmp/dynomite/usr/local/sbin/dynomitedb-redis-server
-# User binaries
-cp ~/repos/redis/package-tools/redis-benchmark /tmp/dynomite/usr/local/bin/
-cp ~/repos/redis/package-tools/redis-check-aof /tmp/dynomite/usr/local/bin/
-cp ~/repos/redis/package-tools/redis-check-dump /tmp/dynomite/usr/local/bin/
-cp ~/repos/redis/package-tools/redis-cli /tmp/dynomite/usr/local/bin/
-# Configuration (default dynomite.yaml is for single server Redis)
-cp ${PWD}/etc/dynomitedb/redis-3.0.7.conf /tmp/dynomite/etc/dynomitedb/redis.conf 
-cp ${PWD}/etc/default/dynomitedb-redis /tmp/dynomite/etc/default/ 
-chmod 0644 /tmp/dynomite/etc/dynomitedb/*
-cp ${PWD}/etc/logrotate.d/dynomitedb-redis /tmp/dynomite/etc/logrotate.d/
+for sb in $SBIN_BINARIES
+do
+    cp ${BUILD}/${sb} $SBIN
+    cp ${BUILD}/${sb}-debug $SBIN
+done
+
+# User binaries - do not include debug binaries
+for b in $BIN_BINARIES
+do
+    cp ${BUILD}/${b} $BIN
+done
+
+# Configuration
+cp ${DEB}/etc/dynomitedb/redis-3.0.7.conf $CONF/redis.conf
+cp ${DEB}/etc/default/dynomitedb-redis $DEFAULT
+cp ${DEB}/etc/logrotate.d/dynomitedb-redis $LOGROTATED
 # init
-cp ${PWD}/etc/init.d/dynomitedb-redis /tmp/dynomite/etc/init.d/
+cp ${DEB}/etc/init.d/dynomitedb-redis $INITD
 # Static files
-cp ~/repos/redis/package-server/00-RELEASENOTES /tmp/dynomite/usr/local/dynomitedb/redis/
-cp ~/repos/redis/package-server/BUGS /tmp/dynomite/usr/local/dynomitedb/redis/
-cp ~/repos/redis/package-server/COPYING /tmp/dynomite/usr/local/dynomitedb/redis/
-cp ~/repos/redis/package-server/README /tmp/dynomite/usr/local/dynomitedb/redis/
-cp ${PWD}/var/dynomitedb/redis/data/README.md /tmp/dynomite/var/dynomitedb/redis/data/
-chmod 0644 /tmp/dynomite/usr/local/dynomitedb/redis/*
-chmod 0644 /tmp/dynomite/var/dynomitedb/redis/data/README.md
+for s in $STATIC_FILES
+do
+    cp ${BUILD}/${s} $STATIC
+done
+cp ${DEB}/var/dynomitedb/redis/data/README.md $DATA
 
 #
 # General perms
 #
-chmod 0755 /tmp/dynomite/etc/init.d/*
-chmod 0644 /tmp/dynomite/etc/default/*
-chmod 0644 /tmp/dynomite/etc/logrotate.d/*
-chmod 0755 /tmp/dynomite/usr/local/sbin/*
-chmod 0755 /tmp/dynomite/usr/local/bin/*
 
-#--config-files /tmp/dynomite/etc/dynomitedb/dynomite/dynomite.yaml \
-#--config-files "/tmp/dynomite/etc/dynomitedb/dynomite/dynomite.yaml" \
+chmod 0755 ${SBIN}/*
+chmod 0755 ${BIN}/*
 
-#--deb-custom-control ~/repos/go/src/gitlab.com/DynomiteDB/DynomiteDB/packaging/ubuntu/dynomite/control \
-#--deb-upstart /etc/init.d/dynomite \
-#--deb-upstart "/etc/init.d/dynomite" \
-#--deb-user "dynomite" \
-#--deb-group "dynomite" \
+chmod 0644 ${DEFAULT}/*
+chmod 0644 ${CONF}/*
+chmod 0755 ${INITD}/*
+chmod 0644 ${LOGROTATED}/*
 
-# Works
-	#--deb-upstart $HOME/repos/go/src/gitlab.com/DynomiteDB/DynomiteDB/packaging/ubuntu/dynomite/dynomite \
-	#--deb-init $HOME/repos/go/src/gitlab.com/DynomiteDB/DynomiteDB/packaging/ubuntu/dynomite/dynomite \
-	#--before-install $HOME/repos/go/src/gitlab.com/DynomiteDB/DynomiteDB/packaging/ubuntu/dynomite/preinst.ex \
+#chmod 0644 ${MAN1}/*
+#chmod 0644 ${MAN8}/*
 
-# Replaced with custom control file
-	#--vendor "DynomiteDB" \
-	#--category "database" \
-	#-m "akbar@dynomitedb.com" \
-	#--description "A fast and scalable database with pluggable backends" \
-	#--url "http://www.dynomitedb.com" 
+chmod 0644 ${DATA}/*
+chmod 0644 ${STATIC}/*
 
 fpm \
 	-f \
 	-s dir \
 	-t deb \
-	-C /tmp/dynomite/ \
-	--directories /tmp/dynomite/ \
+	-C ${PACKAGE_ROOT}/ \
+	--directories ${PACKAGE_ROOT}/ \
 	--config-files /etc/dynomitedb/ \
-	--deb-custom-control ${PWD}/control \
-	--before-install ${PWD}/preinst.ex \
-	--after-install ${PWD}/postinst.ex \
-	--before-remove ${PWD}/prerm.ex \
-	--after-remove ${PWD}/postrm.ex \
-	-n "dynomitedb-redis" \
-	-v 3.0.7 \
+	--deb-custom-control ${DEB}/control \
+	--deb-changelog ${DEB}/changelog \
+	--before-install ${DEB}/preinst.ex \
+	--after-install ${DEB}/postinst.ex \
+	--before-remove ${DEB}/prerm.ex \
+	--after-remove ${DEB}/postrm.ex \
+	-n "${DDB}-${PACKAGE_NAME}" \
+	-v ${VERSION} \
 	--epoch 0
 
-#
-# Sign the .deb package
-#
-#dpkg-sig -k 7FC9E9A0 --sign origin dynomitedb_0.0.1_amd64.deb
+# Run lintian
+lintian *.deb
+

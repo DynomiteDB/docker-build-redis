@@ -1,5 +1,6 @@
-dynomitedb-redis (3.0.7-0ubuntu1) trusty; urgency=low
+dynomitedb-redis (0.0.0-0ubuntu1) trusty; urgency=low
 
-  * Redis 3.0.7
+  * Redis 0.0.0
 
- -- Akbar S. Ahmed <akbar@dynomitedb.com>  Wed, 06 Mar 2016 15:22:42 -0700
+ -- Akbar S. Ahmed <akbar@dynomitedb.com>  Mon, 18 Apr 2016 12:12:12 -0700
+

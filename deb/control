@@ -1,8 +1,8 @@
 Package: dynomitedb-redis
-Version: 0:3.0.7
+Version: 0:0.0.0
 Section: database
 Priority: extra
-Licence: DynomiteDB
+Licence: BSD
 Vendor: DynomiteDB
 Architecture: amd64
 Depends: libc6 (>= 2.14), adduser

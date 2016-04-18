@@ -34,3 +34,6 @@ dynomitedb-redis: non-standard-dir-perm usr/share/doc/dynomitedb-redis/ 0775 != 
 dynomitedb-redis: non-standard-dir-in-var var/dynomitedb/
 dynomitedb-redis: file-in-unusual-dir var/dynomitedb/redis/data/README.md
 dynomitedb-redis: file-missing-in-md5sums usr/share/doc/dynomitedb-redis/changelog.Debian.gz
+dynomitedb-redis: unstripped-binary-or-object usr/local/sbin/dynomitedb-redis-server-debug
+dynomitedb-redis: file-in-usr-local usr/local/sbin/dynomitedb-redis-server-debug
+dynomitedb-redis: file-in-unusual-dir usr/local/sbin/dynomitedb-redis-server-debug

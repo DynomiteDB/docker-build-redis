@@ -82,10 +82,10 @@ rm -rf $SRC/dynomitedb-redis
 mkdir -p $SRC/dynomitedb-redis/conf
 
 # System binaries
-cp $BUILD/src/redis-server $SRC/dynomitedb-redis/
+cp $BUILD/src/redis-server $SRC/dynomitedb-redis/dynomitedb-redis-server
 if [ "$mode" == "production" ] ; then
-	cp $SRC/dynomitedb-redis/redis-server $SRC/dynomitedb-redis/redis-server-debug
-	strip --strip-debug --strip-unneeded /src/dynomitedb-redis/redis-server
+	cp $SRC/dynomitedb-redis/dynomitedb-redis-server $SRC/dynomitedb-redis/dynomitedb-redis-server-debug
+	strip --strip-debug --strip-unneeded /src/dynomitedb-redis/dynomitedb-redis-server
 fi
 
 # Binaries
@@ -112,4 +112,16 @@ cp $DEB/etc/dynomitedb/redis-3.0.7.conf $SRC/dynomitedb-redis/conf/redis.conf
 #
 cd /src
 tar -czf dynomitedb-redis_ubuntu-14.04.4-x64.tgz -C /src dynomitedb-redis
+
+# Update .deb build files
+# Set to future version is building against the dev branch
+# TODO: Come up with a better solution for tagging builds against dev branch
+if [ "$version" == "unstable" ] ; then
+	version=999.999.999
+fi
+export REDIS_VERSION=$version
+sed -i 's/0.0.0/'${version}'/' $DEB/changelog
+sed -i 's/0.0.0/'${version}'/' $DEB/control
+
+$DEB/fpm-build-deb.sh
 

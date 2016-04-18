@@ -1,8 +1,8 @@
 /var/log/dynomitedb/redis/*.log {
-        weekly
-        missingok
+	weekly
+	missingok
 	copytruncate
-        rotate 12
-        compress
-        notifempty
+	rotate 12
+	compress
+	notifempty
 }
