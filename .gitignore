@@ -1,0 +1,12 @@
+# IDE
+.idea
+
+# Temp files
+*.bak
+*.swp
+*~
+
+# Debian/Ubuntu packaging
+deb/get-gpg-key.sh
+deb/scp-to-apt.dynomitedb.com.sh
+deb/tmp
