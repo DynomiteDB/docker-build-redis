@@ -121,7 +121,9 @@ if [ "$version" == "unstable" ] ; then
 fi
 export REDIS_VERSION=$version
 sed -i 's/0.0.0/'${version}'/' $DEB/changelog
+sed -i 's/0.0.0/'${version}'/' $DEB/changelog-debug
 sed -i 's/0.0.0/'${version}'/' $DEB/control
+sed -i 's/0.0.0/'${version}'/' $DEB/control-debug
 
 $DEB/fpm-build-deb.sh
 
