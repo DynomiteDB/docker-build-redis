@@ -82,10 +82,10 @@ rm -rf $SRC/dynomitedb-redis
 mkdir -p $SRC/dynomitedb-redis/conf
 
 # System binaries
-cp $BUILD/src/redis-server $SRC/dynomitedb-redis/dynomitedb-redis-server
+cp $BUILD/src/redis-server $SRC/dynomitedb-redis/redis-server
 if [ "$mode" == "production" ] ; then
-	cp $SRC/dynomitedb-redis/dynomitedb-redis-server $SRC/dynomitedb-redis/dynomitedb-redis-server-debug
-	strip --strip-debug --strip-unneeded /src/dynomitedb-redis/dynomitedb-redis-server
+	cp $SRC/dynomitedb-redis/redis-server $SRC/dynomitedb-redis/redis-server-debug
+	strip --strip-debug --strip-unneeded /src/dynomitedb-redis/redis-server
 fi
 
 # Binaries

@@ -2,5 +2,5 @@
 # Ignore excessive lintian warnings
 
 dynomitedb-redis-debug: dir-in-usr-local usr/local/sbin/
-dynomitedb-redis-debug: file-in-usr-local usr/local/sbin/dynomitedb-redis-server-debug
-dynomitedb-redis-debug: file-in-unusual-dir usr/local/sbin/dynomitedb-redis-server-debug
+dynomitedb-redis-debug: file-in-usr-local usr/local/sbin/redis-server-debug
+dynomitedb-redis-debug: file-in-unusual-dir usr/local/sbin/redis-server-debug

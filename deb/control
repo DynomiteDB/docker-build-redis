@@ -1,5 +1,5 @@
 Package: dynomitedb-redis
-Version: 0:0.0.0
+Version: 0:3.0.7
 Section: database
 Priority: extra
 Licence: BSD

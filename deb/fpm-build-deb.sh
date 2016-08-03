@@ -9,7 +9,7 @@
 PACKAGE_NAME="redis"
 VERSION=$REDIS_VERSION
 BIN_BINARIES="redis-benchmark redis-check-aof redis-check-dump redis-cli"
-SBIN_BINARIES="dynomitedb-redis-server"
+SBIN_BINARIES="redis-server"
 STATIC_FILES="00-RELEASENOTES BUGS COPYING README"
 
 #

@@ -13,8 +13,8 @@ set -e
 # for details, see http://www.debian.org/doc/debian-policy/ or
 # the debian-policy package
 
-REDIS_USER="redis"
-REDIS_GROUP="redis"
+REDIS_USER="dynomitedb"
+REDIS_GROUP="dynomitedb"
 REDIS_HOME="/usr/local/dynomitedb/redis"
 
 case "$1" in
@@ -25,16 +25,16 @@ case "$1" in
 	    set +e
 	fi
 
-	# Add redis group if group does not exist
+	# Add dynomitedb group if group does not exist
 	if ! getent group $REDIS_GROUP >/dev/null
 	then
 	    addgroup --system $REDIS_GROUP >/dev/null
 	fi
 
-	# Add redis user if user does not exist
+	# Add dynomitedb user if user does not exist
 	if ! getent passwd $REDIS_USER >/dev/null
 	then
-	    adduser --system --disabled-login --ingroup redis --no-create-home --home /usr/local/dynomitedb/redis --gecos "dynomitedb redis" --shell /bin/false redis >/dev/null
+	    adduser --system --disabled-login --ingroup dynomitedb --no-create-home --home /usr/local/dynomitedb/home --gecos "dynomitedb" --shell /bin/false dynomitedb >/dev/null
 	fi
 	
 	# end of NIS tolerance zone

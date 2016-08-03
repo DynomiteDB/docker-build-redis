@@ -22,20 +22,20 @@ set -e
 case "$1" in
     purge|remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
 
-        # Delete redis user if user exists
-        if getent passwd redis >/dev/null
+        # Delete dynomitedb user if user exists
+        if getent passwd dynomitedb >/dev/null
         then
-            userdel redis >/dev/null
+            userdel dynomitedb >/dev/null
         fi
 
 	#
 	# Group must be deleted AFTER use
 	#
 
-        # Delete redis group if group exists
-        if getent group redis >/dev/null
+        # Delete dynomitedb group if group exists
+        if getent group dynomitedb >/dev/null
         then
-	    groupdel redis >/dev/null
+	    groupdel dynomitedb >/dev/null
         fi
 
 	update-rc.d -f dynomitedb-redis remove

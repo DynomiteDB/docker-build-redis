@@ -26,14 +26,14 @@ dynomitedb-redis: extra-license-file usr/local/dynomitedb/redis/COPYING
 dynomitedb-redis: file-in-usr-local usr/local/dynomitedb/redis/README
 dynomitedb-redis: file-in-unusual-dir usr/local/dynomitedb/redis/README
 dynomitedb-redis: dir-in-usr-local usr/local/sbin/
-dynomitedb-redis: file-in-usr-local usr/local/sbin/dynomitedb-redis-server
-dynomitedb-redis: file-in-unusual-dir usr/local/sbin/dynomitedb-redis-server
+dynomitedb-redis: file-in-usr-local usr/local/sbin/redis-server
+dynomitedb-redis: file-in-unusual-dir usr/local/sbin/redis-server
 dynomitedb-redis: non-standard-dir-perm usr/share/ 0775 != 0755
 dynomitedb-redis: non-standard-dir-perm usr/share/doc/ 0775 != 0755
 dynomitedb-redis: non-standard-dir-perm usr/share/doc/dynomitedb-redis/ 0775 != 0755
 dynomitedb-redis: non-standard-dir-in-var var/dynomitedb/
 dynomitedb-redis: file-in-unusual-dir var/dynomitedb/redis/data/README.md
 dynomitedb-redis: file-missing-in-md5sums usr/share/doc/dynomitedb-redis/changelog.Debian.gz
-dynomitedb-redis: unstripped-binary-or-object usr/local/sbin/dynomitedb-redis-server-debug
-dynomitedb-redis: file-in-usr-local usr/local/sbin/dynomitedb-redis-server-debug
-dynomitedb-redis: file-in-unusual-dir usr/local/sbin/dynomitedb-redis-server-debug
+dynomitedb-redis: unstripped-binary-or-object usr/local/sbin/redis-server-debug
+dynomitedb-redis: file-in-usr-local usr/local/sbin/redis-server-debug
+dynomitedb-redis: file-in-unusual-dir usr/local/sbin/redis-server-debug

@@ -14,16 +14,15 @@
 NAME=dynomitedb-redis
 DESC="DynomiteDB in-memory backend"
 PATH=/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin
-PIDFILE=/var/run/${NAME}.pid
+PIDFILE=/var/run/dynomitedb/${NAME}.pid
 CONFIG=/etc/dynomitedb/redis.conf
 INIT_OPTIONS=/etc/default/${NAME}
 # RHEL specific file
 #SYSTEM_CONFIG=/etc/sysconfig/${NAME}
-DAEMON=/usr/local/sbin/dynomitedb-redis-server
+DAEMON=/usr/local/sbin/redis-server
 DAEMON_OPTS="${CONFIG}"
-# TODO: Runas USER
-#USER="redis"
-#GROUP="redis"
+USER="dynomitedb"
+GROUP="dynomitedb"
 RETVAL=0
 
 if [ ! -x $DAEMON ] ; then

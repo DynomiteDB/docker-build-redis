@@ -17,20 +17,27 @@ set -e
 # for details, see http://www.debian.org/doc/debian-policy/ or
 # the debian-policy package
 
-REDIS_USER="redis"
-REDIS_GROUP="redis"
+REDIS_USER="dynomitedb"
+REDIS_GROUP="dynomitedb"
 REDIS_HOME="/usr/local/dynomitedb/redis"
 
 case "$1" in
     configure)
-	# TODO: Set permissions
-	#chown $USER:$GROUP /usr/local/dynomitedb/redis
-	#chown $USER:$GROUP /var/dynomitedb/redis
-	#chown $USER:$GROUP /var/log/dynomitedb/redis
+        mkdir -p /etc/dynomitedb
+        mkdir -p /usr/local/dynomitedb/home
+        mkdir -p /var/log/dynomitedb/redis
+        mkdir -p /var/run/dynomitedb
+        mkdir -p /var/dynomitedb/redis/data
 
-	update-rc.d dynomitedb-redis defaults
+        # TODO: Set permissions
+        chown $REDIS_USER:$REDIS_GROUP /usr/local/dynomitedb/redis
+        chown $REDIS_USER:$REDIS_GROUP /var/dynomitedb/redis
+        chown $REDIS_USER:$REDIS_GROUP /var/log/dynomitedb/redis
+        chown $REDIS_USER:$REDIS_GROUP /var/run/dynomitedb
 
-	#service dynomitedb-redis start
+        update-rc.d dynomitedb-redis defaults
+
+        #service dynomitedb-redis start
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
