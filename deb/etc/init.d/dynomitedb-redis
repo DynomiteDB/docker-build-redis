@@ -59,9 +59,11 @@ start_server () {
 
     if [ $IS_RUNNING = false ] ; then
         start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON \
+            --chuid ${USER} --group ${GROUP} \
             --test > /dev/null \
             || return 1
         start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON -- \
+            --chuid ${USER} --group ${GROUP} \
             $DAEMON_OPTS 2>/dev/null \
             || return 2
         # RHEL specific init.d script: touch /var/lock/subsys/${NAME}
